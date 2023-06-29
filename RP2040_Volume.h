@@ -51,11 +51,11 @@ class RP2040_Volume{
       /// @brief Initialize pins for use in tone generation. In differential
       /// mode, you must use pins on the same slice of the RP2040 PWM. You can
       /// initialize as many of these as you like for different pins to drive
-      /// multiple outputs.
+      /// multiple outputs. Will hard fail an assert if pins are not on same
+      /// PWM slice.
       /// @param pin_plus GPIO Pin number for + lead
       /// @param pin_minus GPIO Pin number for - lead
-      /// @param diff If this will be differential audio
-      /// @return True on successful initialization
+
       RP2040_Volume(uint8_t pin_plus, uint8_t pin_minus = 255) {
 
           if (pin_minus != 255) {
