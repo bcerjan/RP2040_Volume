@@ -176,9 +176,7 @@ class RP2040_Volume{
         alarm_pool_add_repeating_timer_us(_alarmPool, usPerWave,
                               timer_cb, (void *)_timerData, &_timer);
         
-        if (_diff) {
-          pwm_set_counter(_sliceNum, TOP);
-        }
+        pwm_set_counter(_sliceNum, 0);
 
         pwm_set_enabled(_sliceNum, true); // Turn on PWM now that we're all set
       }
