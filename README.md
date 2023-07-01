@@ -9,3 +9,5 @@ Improves upon the default Arduino `tone()` function in several ways
 
 
 See the example `main.cpp` for how to use to library.
+
+Note: this library sometimes causes crashes when you start emitting tones immediately after a reset due to weird overlaps with the USB hardware timer. As far as I can tell, this is a bug in the RP2040 core (tested with the `mbed` core) and you can avoid it either by only powering the RP2040 (no data) or putting a short delay (~1 sec) before emitting any tones.
