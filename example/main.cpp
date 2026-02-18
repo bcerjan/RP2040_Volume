@@ -21,6 +21,7 @@ RP2040_Volume* vol;
 void setup() {
   vol = new RP2040_Volume(SPK_PIN_PLUS); // For single-ended audio
   //vol = new RP2040_Volume(SPK_PIN_PLUS, SPK_PIN_MINUS); // For differential audio
+  //delay(1500); // Uncomment if you're running while connected via USB/Serial
 }
 
 void loop() {
