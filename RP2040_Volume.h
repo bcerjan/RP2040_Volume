@@ -116,7 +116,7 @@ class RP2040_Volume{
         pwm_config_set_wrap(&config, TOP);
 
         // Initialize, but don't start yet:
-        pwm_init(_sliceNum, &config, false);
+        pwm_init(_sliceNum, pwm_gpio_to_channel(_pinPlus), &config, false);
 
         if (volume > 100) {
           volume = 100;
