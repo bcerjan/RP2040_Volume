@@ -13,7 +13,8 @@ or something you need to manually block between calls.
 #define SPK_PIN_MINUS   7 // Must be same PWM slice as SPK_PIN_PLUS
 
 //#define TONE_ALARM_POOL_HARDWARE_ALARM_NUM XXX // Only needed if you're using the default hardware
-                                                 // alarm pool for something already
+                                                 // alarm pool for something already and you are using
+                                                 // mbed core. Ignored if on philhower core.
 
 
 RP2040_Volume* vol;
