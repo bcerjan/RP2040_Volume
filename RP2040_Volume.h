@@ -116,7 +116,12 @@ class RP2040_Volume{
         pwm_config_set_wrap(&config, TOP);
 
         // Initialize, but don't start yet:
-        pwm_init(_sliceNum, pwm_gpio_to_channel(_pinPlus), &config, false);
+        // MBED uses a newer version of pwm.h, so needs a different signature
+        #if ARDUINO_ARCH_MBED_RP2040 
+          pwm_init(_sliceNum, pwm_gpio_to_channel(_pinPlus), &config, false);
+        #else
+          pwm_init(_sliceNum, &config, false);
+        #endif
 
         if (volume > 100) {
           volume = 100;
@@ -167,11 +172,16 @@ class RP2040_Volume{
           alarm_pool_destroy(_alarmPool);
         }
 
-        _alarmPool = alarm_pool_create(
-                TONE_ALARM_POOL_HARDWARE_ALARM_NUM,
-                PICO_TIME_DEFAULT_ALARM_POOL_MAX_TIMERS
-                );
-
+        // MBED's version of pwm.h doesn't have the auto-selection of timer pool
+        // available (for some reason...)
+        #if ARDUINO_ARCH_MBED_RP2040
+          _alarmPool = alarm_pool_create(
+            TONE_ALARM_POOL_HARDWARE_ALARM_NUM,
+            PICO_TIME_DEFAULT_ALARM_POOL_MAX_TIMERS
+            );
+        #else
+          _alarmPool = alarm_pool_create_with_unused_hardware_alarm(PICO_TIME_DEFAULT_ALARM_POOL_MAX_TIMERS);
+        #endif
 
         alarm_pool_add_repeating_timer_us(_alarmPool, usPerWave,
                               timer_cb, (void *)_timerData, &_timer);
